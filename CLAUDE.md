@@ -1,3 +1,5 @@
+@AGENTS.md
+
 # Projektregeln
 
 ## Pflichtseiten für Kundenprojekte (deutscher Markt)
