@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { Leaf, Sprout } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -133,6 +134,18 @@ export function MenuSection() {
 
         return (
           <div key={category} id={category} className="mt-12">
+            {category === "pizza" && (
+              <div className="relative mb-6 h-48 overflow-hidden rounded-xl sm:h-64">
+                <Image
+                  src="/images/pizza-burrata.jpg"
+                  alt="Casa Ribelle Pizza mit Burrata, Rucola und Pistazien"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 960px, 100vw"
+                />
+              </div>
+            )}
+
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <h3 className="text-xl font-medium">{categoryLabels[category]}</h3>
 

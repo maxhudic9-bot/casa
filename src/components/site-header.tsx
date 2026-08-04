@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 
 import { CartSheet } from "@/components/cart-sheet"
@@ -13,8 +14,15 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-ribelle-black/95 text-white backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link href="/" className="font-display text-xl font-semibold tracking-wide text-ribelle-gold">
-          Casa Ribelle
+        <Link href="/" aria-label="Casa Ribelle – Startseite" className="shrink-0">
+          <Image
+            src="/images/logo.png"
+            alt="Casa Ribelle – Café · Pizza · Bar"
+            width={904}
+            height={226}
+            priority
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm md:flex">
