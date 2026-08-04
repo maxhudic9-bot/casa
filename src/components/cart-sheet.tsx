@@ -14,7 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { formatPrice, useCart } from "@/lib/cart-context"
+import { formatPrice, lineKey, lineUnitPrice, useCart } from "@/lib/cart-context"
 
 export function CartSheet() {
   const { lines, itemCount, subtotal, setQuantity, removeItem } = useCart()
@@ -50,47 +50,57 @@ export function CartSheet() {
         ) : (
           <div className="flex-1 overflow-y-auto px-4">
             <ul className="flex flex-col gap-4">
-              {lines.map(({ item, quantity }) => (
-                <li key={item.id} className="flex items-start justify-between gap-3">
-                  <div className="flex-1">
-                    <p className="font-medium leading-tight">{item.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {formatPrice(item.price)}
-                    </p>
-                    <div className="mt-1.5 flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="icon-xs"
-                        onClick={() => setQuantity(item.id, quantity - 1)}
-                        aria-label={`${item.name}: Menge verringern`}
-                      >
-                        <Minus />
-                      </Button>
-                      <span className="min-w-4 text-center text-sm">{quantity}</span>
-                      <Button
-                        variant="outline"
-                        size="icon-xs"
-                        onClick={() => setQuantity(item.id, quantity + 1)}
-                        aria-label={`${item.name}: Menge erhöhen`}
-                      >
-                        <Plus />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon-xs"
-                        onClick={() => removeItem(item.id)}
-                        aria-label={`${item.name} entfernen`}
-                        className="ml-1 text-muted-foreground hover:text-destructive"
-                      >
-                        <Trash2 />
-                      </Button>
+              {lines.map((line) => {
+                const { item, quantity, selectedAddOns } = line
+                const key = lineKey(item.id, selectedAddOns)
+                const unitPrice = lineUnitPrice(line)
+                return (
+                  <li key={key} className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <p className="font-medium leading-tight">{item.name}</p>
+                      {selectedAddOns.length > 0 && (
+                        <p className="text-sm text-ribelle-gold">
+                          {selectedAddOns.map((a) => `+ ${a.name}`).join(", ")}
+                        </p>
+                      )}
+                      <p className="text-sm text-muted-foreground">
+                        {formatPrice(unitPrice)}
+                      </p>
+                      <div className="mt-1.5 flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon-xs"
+                          onClick={() => setQuantity(key, quantity - 1)}
+                          aria-label={`${item.name}: Menge verringern`}
+                        >
+                          <Minus />
+                        </Button>
+                        <span className="min-w-4 text-center text-sm">{quantity}</span>
+                        <Button
+                          variant="outline"
+                          size="icon-xs"
+                          onClick={() => setQuantity(key, quantity + 1)}
+                          aria-label={`${item.name}: Menge erhöhen`}
+                        >
+                          <Plus />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon-xs"
+                          onClick={() => removeItem(key)}
+                          aria-label={`${item.name} entfernen`}
+                          className="ml-1 text-muted-foreground hover:text-destructive"
+                        >
+                          <Trash2 />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                  <p className="font-medium whitespace-nowrap">
-                    {formatPrice(item.price * quantity)}
-                  </p>
-                </li>
-              ))}
+                    <p className="font-medium whitespace-nowrap">
+                      {formatPrice(unitPrice * quantity)}
+                    </p>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         )}

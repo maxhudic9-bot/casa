@@ -2,43 +2,73 @@
 
 import * as React from "react"
 
-import type { CartLine, MenuItem } from "@/lib/types"
+import type { CartLine, MenuAddOn, MenuItem } from "@/lib/types"
 
 interface CartState {
   lines: CartLine[]
 }
 
 type CartAction =
-  | { type: "add"; item: MenuItem }
-  | { type: "remove"; id: string }
-  | { type: "setQuantity"; id: string; quantity: number }
+  | { type: "add"; item: MenuItem; selectedAddOns: MenuAddOn[] }
+  | { type: "remove"; key: string }
+  | { type: "setQuantity"; key: string; quantity: number }
   | { type: "clear" }
   | { type: "hydrate"; lines: CartLine[] }
+
+/** Eindeutiger Schluessel pro Warenkorb-Zeile: Gericht + gewaehlte Extras. */
+export function lineKey(itemId: string, addOns: MenuAddOn[]): string {
+  const addOnIds = addOns.map((a) => a.id).sort().join(",")
+  return `${itemId}::${addOnIds}`
+}
+
+export function lineUnitPrice(line: CartLine): number {
+  return (
+    line.item.price + line.selectedAddOns.reduce((sum, a) => sum + a.price, 0)
+  )
+}
 
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "add": {
-      const existing = state.lines.find((l) => l.item.id === action.item.id)
+      const key = lineKey(action.item.id, action.selectedAddOns)
+      const existing = state.lines.find(
+        (l) => lineKey(l.item.id, l.selectedAddOns) === key
+      )
       if (existing) {
         return {
           lines: state.lines.map((l) =>
-            l.item.id === action.item.id
+            lineKey(l.item.id, l.selectedAddOns) === key
               ? { ...l, quantity: l.quantity + 1 }
               : l
           ),
         }
       }
-      return { lines: [...state.lines, { item: action.item, quantity: 1 }] }
+      return {
+        lines: [
+          ...state.lines,
+          { item: action.item, quantity: 1, selectedAddOns: action.selectedAddOns },
+        ],
+      }
     }
     case "remove":
-      return { lines: state.lines.filter((l) => l.item.id !== action.id) }
+      return {
+        lines: state.lines.filter(
+          (l) => lineKey(l.item.id, l.selectedAddOns) !== action.key
+        ),
+      }
     case "setQuantity": {
       if (action.quantity <= 0) {
-        return { lines: state.lines.filter((l) => l.item.id !== action.id) }
+        return {
+          lines: state.lines.filter(
+            (l) => lineKey(l.item.id, l.selectedAddOns) !== action.key
+          ),
+        }
       }
       return {
         lines: state.lines.map((l) =>
-          l.item.id === action.id ? { ...l, quantity: action.quantity } : l
+          lineKey(l.item.id, l.selectedAddOns) === action.key
+            ? { ...l, quantity: action.quantity }
+            : l
         ),
       }
     }
@@ -53,9 +83,9 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
 interface CartContextValue {
   lines: CartLine[]
-  addItem: (item: MenuItem) => void
-  removeItem: (id: string) => void
-  setQuantity: (id: string, quantity: number) => void
+  addItem: (item: MenuItem, selectedAddOns?: MenuAddOn[]) => void
+  removeItem: (key: string) => void
+  setQuantity: (key: string, quantity: number) => void
   clear: () => void
   subtotal: number
   itemCount: number
@@ -73,7 +103,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY)
       if (raw) {
-        const lines = JSON.parse(raw) as CartLine[]
+        const lines = (JSON.parse(raw) as CartLine[]).map((l) => ({
+          ...l,
+          selectedAddOns: l.selectedAddOns ?? [],
+        }))
         dispatch({ type: "hydrate", lines })
       }
     } catch {
@@ -89,16 +122,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [state.lines])
 
   const subtotal = state.lines.reduce(
-    (sum, l) => sum + l.item.price * l.quantity,
+    (sum, l) => sum + lineUnitPrice(l) * l.quantity,
     0
   )
   const itemCount = state.lines.reduce((sum, l) => sum + l.quantity, 0)
 
   const value: CartContextValue = {
     lines: state.lines,
-    addItem: (item) => dispatch({ type: "add", item }),
-    removeItem: (id) => dispatch({ type: "remove", id }),
-    setQuantity: (id, quantity) => dispatch({ type: "setQuantity", id, quantity }),
+    addItem: (item, selectedAddOns = []) =>
+      dispatch({ type: "add", item, selectedAddOns }),
+    removeItem: (key) => dispatch({ type: "remove", key }),
+    setQuantity: (key, quantity) => dispatch({ type: "setQuantity", key, quantity }),
     clear: () => dispatch({ type: "clear" }),
     subtotal,
     itemCount,

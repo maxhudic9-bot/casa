@@ -14,7 +14,7 @@ import { PayPalPayment } from "@/components/checkout/paypal-payment"
 import { StripeElementsProvider } from "@/components/checkout/stripe-elements-provider"
 import { CardPaymentForm } from "@/components/checkout/card-payment-form"
 import { ApplePayButton } from "@/components/checkout/apple-pay-button"
-import { formatPrice, useCart } from "@/lib/cart-context"
+import { formatPrice, lineKey, lineUnitPrice, useCart } from "@/lib/cart-context"
 import { usePaymentConfig } from "@/lib/use-payment-config"
 import type { PaymentMethod, PickupDetails } from "@/lib/types"
 
@@ -147,12 +147,18 @@ export default function CheckoutPage() {
           <CardContent className="space-y-4">
             <h2 className="font-medium">Bestellübersicht</h2>
             <ul className="space-y-2 text-sm">
-              {lines.map(({ item, quantity }) => (
-                <li key={item.id} className="flex justify-between gap-2">
+              {lines.map((line) => (
+                <li
+                  key={lineKey(line.item.id, line.selectedAddOns)}
+                  className="flex justify-between gap-2"
+                >
                   <span className="text-muted-foreground">
-                    {quantity}× {item.name}
+                    {line.quantity}× {line.item.name}
+                    {line.selectedAddOns.length > 0 && (
+                      <> ({line.selectedAddOns.map((a) => a.name).join(", ")})</>
+                    )}
                   </span>
-                  <span>{formatPrice(item.price * quantity)}</span>
+                  <span>{formatPrice(lineUnitPrice(line) * line.quantity)}</span>
                 </li>
               ))}
             </ul>

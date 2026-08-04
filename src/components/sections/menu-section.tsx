@@ -5,10 +5,12 @@ import { Leaf, Sprout } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { categoryLabels, menu } from "@/data/menu"
 import { formatPrice, useCart } from "@/lib/cart-context"
-import type { MenuCategory, MenuItem } from "@/lib/types"
+import type { MenuAddOn, MenuCategory, MenuItem } from "@/lib/types"
 
 const CATEGORY_ORDER: MenuCategory[] = ["pizza", "salate", "antipasti", "dolce"]
 
@@ -41,17 +43,31 @@ function MenuItemCard({
   item: MenuItem
   dimmed?: boolean
   highlighted?: boolean
-  onAdd: () => void
+  onAdd: (selectedAddOns: MenuAddOn[]) => void
 }) {
+  const [selectedAddOnIds, setSelectedAddOnIds] = React.useState<string[]>([])
+
+  const selectedAddOns = (item.addOns ?? []).filter((a) =>
+    selectedAddOnIds.includes(a.id)
+  )
+  const totalPrice =
+    item.price + selectedAddOns.reduce((sum, a) => sum + a.price, 0)
+
+  function toggleAddOn(addOnId: string, checked: boolean) {
+    setSelectedAddOnIds((prev) =>
+      checked ? [...prev, addOnId] : prev.filter((id) => id !== addOnId)
+    )
+  }
+
   return (
     <div
       className={cn(
-        "flex items-start justify-between gap-3 rounded-lg border p-4 transition-all",
+        "flex flex-col justify-between gap-3 rounded-lg border p-4 transition-all sm:flex-row sm:items-start",
         highlighted ? "border-green-600 ring-1 ring-green-600" : "border-border",
         dimmed && "opacity-40"
       )}
     >
-      <div>
+      <div className="flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <p className="font-medium">{item.name}</p>
           <DietBadges item={item} />
@@ -60,10 +76,36 @@ function MenuItemCard({
           <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
         )}
         <p className="mt-2 font-medium">{formatPrice(item.price)}</p>
+
+        {item.addOns && item.addOns.length > 0 && (
+          <div className="mt-2 space-y-1.5">
+            {item.addOns.map((addOn) => {
+              const checkboxId = `${item.id}-${addOn.id}`
+              return (
+                <div key={addOn.id} className="flex items-center gap-2">
+                  <Checkbox
+                    id={checkboxId}
+                    checked={selectedAddOnIds.includes(addOn.id)}
+                    onCheckedChange={(checked) => toggleAddOn(addOn.id, checked === true)}
+                  />
+                  <Label htmlFor={checkboxId} className="text-sm font-normal text-muted-foreground">
+                    + {addOn.name} ({formatPrice(addOn.price)})
+                  </Label>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
-      <Button size="sm" onClick={onAdd}>
-        In den Warenkorb
-      </Button>
+
+      <div className="flex flex-col items-end gap-1.5">
+        {selectedAddOns.length > 0 && (
+          <p className="text-sm font-medium">= {formatPrice(totalPrice)}</p>
+        )}
+        <Button size="sm" onClick={() => onAdd(selectedAddOns)}>
+          In den Warenkorb
+        </Button>
+      </div>
     </div>
   )
 }
@@ -123,7 +165,7 @@ export function MenuSection() {
                 <MenuItemCard
                   key={item.id}
                   item={item}
-                  onAdd={() => addItem(item)}
+                  onAdd={(selectedAddOns) => addItem(item, selectedAddOns)}
                   dimmed={category === "pizza" && !matchesPizzaFilter(item)}
                   highlighted={category === "pizza" && pizzaFilter !== "all" && matchesPizzaFilter(item)}
                 />

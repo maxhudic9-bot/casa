@@ -3,9 +3,15 @@
 // Saftschorlen, Flaschen-/Fassbiere) sind noch nicht als Online-Bestellposten
 // abgebildet, da sie mehrere Groessen/Preise pro Position haben (0,1L/0,2L
 // bzw. 0,3L/0,5L) und dafuer ein eigenes Datenmodell noetig waere.
-import type { MenuItem } from "@/lib/types"
+import type { MenuAddOn, MenuItem } from "@/lib/types"
 
-export const menu: MenuItem[] = [
+export const BURRATA_ADDON: MenuAddOn = {
+  id: "extra-burrata",
+  name: "Extra Burrata",
+  price: 5.0,
+}
+
+const menuData: MenuItem[] = [
   // --- Salate / Vor- und Nachgang ---
   {
     id: "salat-ribelle",
@@ -244,6 +250,11 @@ export const menu: MenuItem[] = [
     image: "/images/menu/pizza-placeholder.jpg",
   },
 ]
+
+// Bei jeder Pizza ist Extra Burrata als Aufpreis-Option waehlbar.
+export const menu: MenuItem[] = menuData.map((item) =>
+  item.category === "pizza" ? { ...item, addOns: [BURRATA_ADDON] } : item
+)
 
 export const categoryLabels: Record<MenuItem["category"], string> = {
   pizza: "Pizza",
