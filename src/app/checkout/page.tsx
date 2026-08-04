@@ -14,6 +14,7 @@ import { PayPalPayment } from "@/components/checkout/paypal-payment"
 import { StripeElementsProvider } from "@/components/checkout/stripe-elements-provider"
 import { CardPaymentForm } from "@/components/checkout/card-payment-form"
 import { ApplePayButton } from "@/components/checkout/apple-pay-button"
+import { OrderConfirmationDialog } from "@/components/checkout/order-confirmation-dialog"
 import { formatPrice, lineKey, lineUnitPrice, useCart } from "@/lib/cart-context"
 import { usePaymentConfig } from "@/lib/use-payment-config"
 import type { PaymentMethod, PickupDetails } from "@/lib/types"
@@ -33,25 +34,40 @@ export default function CheckoutPage() {
   const [pickup, setPickup] = React.useState<PickupDetails>(EMPTY_PICKUP)
   const [method, setMethod] = React.useState<PaymentMethod>("paypal")
   const [error, setError] = React.useState<string | null>(null)
+  const [orderConfirmationOpen, setOrderConfirmationOpen] = React.useState(false)
 
   const pickupComplete = Boolean(pickup.name && pickup.phone && pickup.email)
 
   function handleSuccess() {
     clear()
-    router.push("/bestellung-erfolgreich")
+    setOrderConfirmationOpen(true)
   }
 
+  function handleConfirmationOpenChange(open: boolean) {
+    setOrderConfirmationOpen(open)
+    if (!open) router.push("/")
+  }
+
+  // Das Bestaetigungs-Modal muss unabhaengig vom Warenkorb-Zustand sichtbar
+  // bleiben, denn handleSuccess() leert den Warenkorb bevor das Modal
+  // geoeffnet wird - der "Warenkorb ist leer"-Zustand darf es nicht verdecken.
   if (lines.length === 0) {
     return (
-      <div className="mx-auto flex max-w-lg flex-col items-center gap-4 px-4 py-24 text-center">
-        <h1 className="text-2xl font-semibold">Dein Warenkorb ist leer</h1>
-        <p className="text-muted-foreground">
-          Füge zuerst etwas aus der Speisekarte hinzu, bevor du zur Kasse gehst.
-        </p>
-        <Button asChild>
-          <Link href="/#speisekarte">Zur Speisekarte</Link>
-        </Button>
-      </div>
+      <>
+        <OrderConfirmationDialog
+          open={orderConfirmationOpen}
+          onOpenChange={handleConfirmationOpenChange}
+        />
+        <div className="mx-auto flex max-w-lg flex-col items-center gap-4 px-4 py-24 text-center">
+          <h1 className="text-2xl font-semibold">Dein Warenkorb ist leer</h1>
+          <p className="text-muted-foreground">
+            Füge zuerst etwas aus der Speisekarte hinzu, bevor du zur Kasse gehst.
+          </p>
+          <Button asChild>
+            <Link href="/#speisekarte">Zur Speisekarte</Link>
+          </Button>
+        </div>
+      </>
     )
   }
 
