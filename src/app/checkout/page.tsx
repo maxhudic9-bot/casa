@@ -64,7 +64,7 @@ export default function CheckoutPage() {
             Füge zuerst etwas aus der Speisekarte hinzu, bevor du zur Kasse gehst.
           </p>
           <Button asChild>
-            <Link href="/#speisekarte">Zur Speisekarte</Link>
+            <Link href="/speisekarte">Zur Speisekarte</Link>
           </Button>
         </div>
       </>

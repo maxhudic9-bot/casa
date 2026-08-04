@@ -5,7 +5,7 @@ import { CartSheet } from "@/components/cart-sheet"
 
 const NAV_LINKS = [
   { href: "/#ueber-uns", label: "Über uns" },
-  { href: "/#speisekarte", label: "Speisekarte" },
+  { href: "/speisekarte", label: "Speisekarte" },
   { href: "/#kontakt", label: "Kontakt" },
   { href: "/impressum", label: "Impressum" },
 ]

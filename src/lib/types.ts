@@ -1,4 +1,26 @@
-export type MenuCategory = "pizza" | "salate" | "antipasti" | "dolce"
+export type MenuCategory = "pizza" | "salate" | "antipasti" | "dolce" | "getraenke"
+
+export type DrinkCategory =
+  | "wein-weiss"
+  | "wein-rot"
+  | "spritz"
+  | "alkoholfrei"
+  | "erfrischung"
+  | "saftschorle"
+  | "flaschenbier"
+  | "fassbier"
+
+export interface DrinkVariant {
+  size: string
+  price: number
+}
+
+export interface DrinkItem {
+  id: string
+  category: DrinkCategory
+  name: string
+  variants: DrinkVariant[]
+}
 
 export interface MenuAddOn {
   id: string

@@ -122,27 +122,27 @@ export function MenuSection() {
   }
 
   return (
-    <section id="speisekarte" className="mx-auto max-w-5xl px-4 py-20">
-      <h2 className="font-display text-3xl font-semibold">Speisekarte</h2>
-      <p className="mt-2 text-muted-foreground">
-        [PLATZHALTER] Getränkekarte (Weine, Spritz, Softdrinks, Biere) folgt in
-        einem separaten Schritt.
-      </p>
-
+    <div>
       {CATEGORY_ORDER.map((category) => {
         const items = menu.filter((item) => item.category === category)
 
         return (
-          <div key={category} id={category} className="mt-12">
+          <div key={category} id={category} className="mt-16 scroll-mt-20 first:mt-0">
             {category === "pizza" && (
-              <div className="relative mb-6 h-48 overflow-hidden rounded-xl sm:h-64">
-                <Image
-                  src="/images/pizza-burrata.jpg"
-                  alt="Casa Ribelle Pizza mit Burrata, Rucola und Pistazien"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 960px, 100vw"
-                />
+              <div className="mb-6 flex flex-col items-center gap-6 sm:flex-row sm:items-end">
+                <div className="relative aspect-square w-full max-w-[220px] shrink-0 overflow-hidden rounded-xl shadow-lg ring-1 ring-ribelle-gold/30 sm:max-w-[260px]">
+                  <Image
+                    src="/images/pizza-burrata-square.jpg"
+                    alt="Casa Ribelle Pizza mit Burrata, Rucola und Pistazien"
+                    fill
+                    className="object-cover"
+                    sizes="260px"
+                  />
+                </div>
+                <p className="text-center text-sm text-muted-foreground sm:text-left">
+                  Holzofen-Pizza, handgemacht — von der klassischen Margherita bis zur
+                  Casa Ribelle mit Burrata und Pistazien.
+                </p>
               </div>
             )}
 
@@ -193,6 +193,6 @@ export function MenuSection() {
           </div>
         )
       })}
-    </section>
+    </div>
   )
 }

@@ -261,4 +261,5 @@ export const categoryLabels: Record<MenuItem["category"], string> = {
   salate: "Salate",
   antipasti: "Antipasti",
   dolce: "Dolce",
+  getraenke: "Getränke",
 }

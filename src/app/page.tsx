@@ -1,36 +1,27 @@
 import Image from "next/image";
+import Link from "next/link";
+import { MapPin, Phone } from "lucide-react";
 
-import { MenuSection } from "@/components/sections/menu-section";
+import { PizzaScrollHero } from "@/components/three/pizza-scroll-hero-loader";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-4 text-center text-white">
-        <Image
-          src="/images/aussenfassade.jpg"
-          alt="Casa Ribelle Café · Pizza · Bar, Außenansicht am Abend"
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-ribelle-black/70" />
-
-        <div className="relative">
-          <p className="text-sm tracking-[0.3em] text-ribelle-gold uppercase">
-            Freiburg im Breisgau
-          </p>
-          <h1 className="font-display mt-4 text-5xl font-semibold sm:text-6xl">
-            Casa Ribelle
-          </h1>
-          <p className="mt-4 max-w-xl text-white/80">
-            Dein neuer Rhythmus in Freiburg – Espresso · Pizza · Bier
-          </p>
-          <p className="mt-3 max-w-xl text-sm text-white/50">
-            [PLATZHALTER] 3D-Scroll-Animation (Zutaten fallen auf die Pizza)
-            folgt in einem separaten Schritt.
-          </p>
-        </div>
-      </section>
+      <PizzaScrollHero>
+        <p className="text-sm tracking-[0.3em] text-ribelle-gold uppercase">
+          Freiburg im Breisgau
+        </p>
+        <h1 className="font-display mt-4 text-5xl font-semibold sm:text-6xl">
+          Casa Ribelle
+        </h1>
+        <p className="mt-4 max-w-xl text-white/80">
+          Dein neuer Rhythmus in Freiburg – Espresso · Pizza · Bier
+        </p>
+        <p className="mt-6 text-xs tracking-[0.2em] text-white/40 uppercase">
+          ↓ Scroll für mehr
+        </p>
+      </PizzaScrollHero>
 
       <section id="ueber-uns" className="relative flex min-h-[60vh] items-end overflow-hidden">
         <Image
@@ -48,20 +39,47 @@ export default function Home() {
           <p className="mt-3 max-w-xl text-white/80">
             Handbemalte Graffiti-Kunst, warmes Licht und echter Holzofen-Charme
             – bei uns triffst du dich, isst gut und bleibst länger als geplant.
-            [PLATZHALTER] Weitere Stimmungs-/Instagram-Highlights folgen.
           </p>
         </div>
       </section>
 
-      <MenuSection />
+      <section className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 py-20 text-center">
+        <h2 className="font-display text-3xl font-semibold">Speisekarte</h2>
+        <p className="max-w-md text-muted-foreground">
+          Pizza, Salate, Antipasti, Dolce und Getränke – alles zur Abholung
+          bestellbar.
+        </p>
+        <Button asChild size="lg">
+          <Link href="/speisekarte">Zur vollständigen Speisekarte</Link>
+        </Button>
+      </section>
 
-      <section id="kontakt" className="mx-auto max-w-5xl px-4 py-20">
-        <h2 className="font-display text-3xl font-semibold">Kontakt</h2>
-        <div className="mt-4 space-y-1 text-muted-foreground">
-          <p>Casa Ribelle</p>
-          <p>Rotteckring 2, 79098 Freiburg im Breisgau</p>
-          <p>Telefon: 0761 21495620</p>
-          <p>Mo–Do 11–23 Uhr, Fr–Sa 11–24 Uhr, So 11–22 Uhr</p>
+      <section id="kontakt" className="relative overflow-hidden">
+        <div className="relative min-h-[50vh]">
+          <Image
+            src="/images/aussenfassade.jpg"
+            alt="Casa Ribelle Café · Pizza · Bar, Außenansicht am Abend"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-ribelle-black/75" />
+
+          <div className="relative mx-auto flex max-w-5xl flex-col items-start justify-center gap-4 px-4 py-20 text-white">
+            <h2 className="font-display text-3xl font-semibold">Kontakt</h2>
+            <div className="space-y-2 text-white/80">
+              <p className="flex items-center gap-2">
+                <MapPin className="size-4 shrink-0 text-ribelle-gold" />
+                Rotteckring 2, 79098 Freiburg im Breisgau
+              </p>
+              <p className="flex items-center gap-2">
+                <Phone className="size-4 shrink-0 text-ribelle-gold" />
+                0761 21495620
+              </p>
+            </div>
+            <div className="text-sm text-white/60">
+              <p>Mo–Do 11–23 Uhr · Fr–Sa 11–24 Uhr · So 11–22 Uhr</p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
