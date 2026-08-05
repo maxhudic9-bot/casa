@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { cn } from "@/lib/utils"
 import { DRINK_CATEGORY_ORDER, drinkCategoryLabels, drinks, WINE_NOTE } from "@/data/drinks"
 import { formatPrice, useCart } from "@/lib/cart-context"
@@ -30,7 +31,7 @@ function DrinkCard({ drink }: { drink: DrinkItem }) {
   }
 
   return (
-    <div className="flex flex-col justify-between gap-2 rounded-lg border border-border p-3 sm:flex-row sm:items-center">
+    <div className="flex flex-col justify-between gap-2 rounded-lg border border-border p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-ribelle-gold/50 hover:shadow-md sm:flex-row sm:items-center">
       <div>
         <p className="font-medium">{drink.name}</p>
         {drink.variants.length > 1 && (
@@ -71,7 +72,8 @@ export function DrinksSection() {
       <h2 className="font-display text-3xl font-semibold">Getränkekarte</h2>
 
       {DRINK_CATEGORY_ORDER.map((category) => (
-        <div key={category} id={`getraenke-${category}`} className="mt-12 scroll-mt-20">
+        <ScrollReveal key={category} className="mt-12">
+        <div id={`getraenke-${category}`} className="scroll-mt-20">
           <h3 className="mb-4 text-xl font-medium">{drinkCategoryLabels[category]}</h3>
           {(category === "wein-weiss" || category === "wein-rot") && (
             <p className="mb-4 text-sm text-muted-foreground">{WINE_NOTE}</p>
@@ -84,6 +86,7 @@ export function DrinksSection() {
               ))}
           </div>
         </div>
+        </ScrollReveal>
       ))}
     </div>
   )

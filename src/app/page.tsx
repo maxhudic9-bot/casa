@@ -3,6 +3,8 @@ import Link from "next/link";
 import { MapPin, Phone } from "lucide-react";
 
 import { PizzaFrameSequence } from "@/components/hero/pizza-frame-sequence";
+import { GallerySection } from "@/components/sections/gallery-section";
+import { GoogleReviews } from "@/components/sections/google-reviews";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { Button } from "@/components/ui/button";
 
@@ -44,6 +46,14 @@ export default function Home() {
             </p>
           </div>
         </section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <GallerySection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <GoogleReviews />
       </ScrollReveal>
 
       <ScrollReveal>

@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { cn } from "@/lib/utils"
 import { categoryLabels, menu } from "@/data/menu"
 import { formatPrice, useCart } from "@/lib/cart-context"
@@ -47,6 +48,7 @@ function MenuItemCard({
   onAdd: (selectedAddOns: MenuAddOn[]) => void
 }) {
   const [selectedAddOnIds, setSelectedAddOnIds] = React.useState<string[]>([])
+  const [justAdded, setJustAdded] = React.useState(false)
 
   const selectedAddOns = (item.addOns ?? []).filter((a) =>
     selectedAddOnIds.includes(a.id)
@@ -60,10 +62,17 @@ function MenuItemCard({
     )
   }
 
+  function handleAdd() {
+    onAdd(selectedAddOns)
+    setJustAdded(true)
+    window.setTimeout(() => setJustAdded(false), 1200)
+  }
+
   return (
     <div
       className={cn(
-        "flex flex-col justify-between gap-3 rounded-lg border p-4 transition-all sm:flex-row sm:items-start",
+        "flex flex-col justify-between gap-3 rounded-lg border p-4 transition-all duration-200 sm:flex-row sm:items-start",
+        "hover:-translate-y-0.5 hover:border-ribelle-gold/50 hover:shadow-md",
         highlighted ? "border-green-600 ring-1 ring-green-600" : "border-border",
         dimmed && "opacity-40"
       )}
@@ -103,8 +112,12 @@ function MenuItemCard({
         {selectedAddOns.length > 0 && (
           <p className="text-sm font-medium">= {formatPrice(totalPrice)}</p>
         )}
-        <Button size="sm" onClick={() => onAdd(selectedAddOns)}>
-          In den Warenkorb
+        <Button
+          size="sm"
+          variant={justAdded ? "secondary" : "default"}
+          onClick={handleAdd}
+        >
+          {justAdded ? "Hinzugefügt ✓" : "In den Warenkorb"}
         </Button>
       </div>
     </div>
@@ -127,7 +140,8 @@ export function MenuSection() {
         const items = menu.filter((item) => item.category === category)
 
         return (
-          <div key={category} id={category} className="mt-16 scroll-mt-20 first:mt-0">
+          <ScrollReveal key={category} className="mt-16 first:mt-0">
+          <div id={category} className="scroll-mt-20">
             {category === "pizza" && (
               <div className="mb-6 flex flex-col items-center gap-6 sm:flex-row sm:items-end">
                 <div className="relative aspect-square w-full max-w-[220px] shrink-0 overflow-hidden rounded-xl shadow-lg ring-1 ring-ribelle-gold/30 sm:max-w-[260px]">
@@ -191,6 +205,7 @@ export function MenuSection() {
               </p>
             )}
           </div>
+          </ScrollReveal>
         )
       })}
     </div>

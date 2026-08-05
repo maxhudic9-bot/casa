@@ -5,6 +5,7 @@ import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartProvider>
           <SiteHeader />
           <main className="flex-1">{children}</main>
-          <SiteFooter />
+          <ScrollReveal>
+            <SiteFooter />
+          </ScrollReveal>
         </CartProvider>
       </body>
     </html>
