@@ -47,6 +47,11 @@ export function PizzaFrameSequence({ children }: PizzaFrameSequenceProps) {
       canvas.height = ch * dpr
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    // Browser-Default fuer drawImage-Skalierung ist oft "low" - bei jedem
+    // Resize/Kontext-Reset explizit auf die beste Filterqualitaet setzen,
+    // damit das Hochskalieren so scharf wie moeglich bleibt.
+    ctx.imageSmoothingEnabled = true
+    ctx.imageSmoothingQuality = "high"
 
     const scale = Math.max(cw / img.width, ch / img.height)
     const drawW = img.width * scale
