@@ -32,8 +32,8 @@ export default function Home() {
         </p>
       </PizzaFrameSequence>
 
-      <section id="ueber-uns" className="relative h-[200vh]">
-        <div className="sticky top-0 z-0 flex h-screen items-end overflow-hidden bg-[url('/images/graffiti-wand-tag.jpg')] bg-cover bg-center bg-no-repeat">
+      <section id="ueber-uns" className="relative h-[200lvh]">
+        <div className="sticky top-0 z-0 flex h-[100lvh] items-end overflow-hidden bg-[url('/images/graffiti-wand-tag.jpg')] bg-cover bg-center bg-no-repeat">
           <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
 
           <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
