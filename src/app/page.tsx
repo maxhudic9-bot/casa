@@ -43,13 +43,20 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
 
           <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
-            <h2 className="font-display text-3xl font-semibold sm:text-4xl">
-              Mehr als nur Pizza
+            <h2 className="font-sans text-4xl leading-[0.95] font-black tracking-tight uppercase sm:text-6xl md:text-7xl">
+              <span className="block -rotate-2 text-white [text-shadow:3px_3px_0_rgba(0,0,0,0.6)]">
+                Mach dir
+              </span>
+              <span className="mt-1 block rotate-1 text-ribelle-gold [text-shadow:3px_3px_0_rgba(0,0,0,0.6)] sm:mt-2">
+                keine Sorgen,
+              </span>
+              <span className="mt-1 block -rotate-1 text-white [text-shadow:3px_3px_0_rgba(0,0,0,0.6)] sm:mt-2">
+                iss erst mal
+              </span>
+              <span className="mt-1 block rotate-2 text-ribelle-red [text-shadow:3px_3px_0_rgba(0,0,0,0.6)] sm:mt-2">
+                eine Pizza!
+              </span>
             </h2>
-            <p className="mt-3 max-w-xl text-white/80">
-              Handbemalte Graffiti-Kunst, warmes Licht und echter Holzofen-Charme
-              – bei uns triffst du dich, isst gut und bleibst länger als geplant.
-            </p>
           </div>
         </section>
       </ScrollFade>
