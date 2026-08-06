@@ -5,7 +5,8 @@ import { MapPin, Phone } from "lucide-react";
 import { PizzaFrameSequence } from "@/components/hero/pizza-frame-sequence";
 import { GallerySection } from "@/components/sections/gallery-section";
 import { GoogleReviews } from "@/components/sections/google-reviews";
-import { ScrollReveal } from "@/components/scroll-reveal";
+import { MenuTeaserCard } from "@/components/sections/menu-teaser-card";
+import { ScrollFade } from "@/components/scroll-fade";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -26,7 +27,32 @@ export default function Home() {
         </p>
       </PizzaFrameSequence>
 
-      <ScrollReveal>
+      <ScrollFade>
+        <section className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 py-20 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
+          <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+            <h2 className="font-display text-3xl font-semibold">Speisekarte</h2>
+            <p className="max-w-md text-muted-foreground">
+              Pizza, Salate, Antipasti, Dolce und Getränke – alles zur Abholung
+              bestellbar.
+            </p>
+            <Button asChild size="lg">
+              <Link href="/speisekarte">Zur vollständigen Speisekarte</Link>
+            </Button>
+          </div>
+
+          <MenuTeaserCard />
+        </section>
+      </ScrollFade>
+
+      <ScrollFade>
+        <GallerySection />
+      </ScrollFade>
+
+      <ScrollFade>
+        <GoogleReviews />
+      </ScrollFade>
+
+      <ScrollFade>
         <section id="ueber-uns" className="relative flex min-h-[60vh] items-end overflow-hidden">
           <Image
             src="/images/graffiti-wand-tag.jpg"
@@ -46,30 +72,9 @@ export default function Home() {
             </p>
           </div>
         </section>
-      </ScrollReveal>
+      </ScrollFade>
 
-      <ScrollReveal>
-        <GallerySection />
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <GoogleReviews />
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <section className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 py-20 text-center">
-          <h2 className="font-display text-3xl font-semibold">Speisekarte</h2>
-          <p className="max-w-md text-muted-foreground">
-            Pizza, Salate, Antipasti, Dolce und Getränke – alles zur Abholung
-            bestellbar.
-          </p>
-          <Button asChild size="lg">
-            <Link href="/speisekarte">Zur vollständigen Speisekarte</Link>
-          </Button>
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal>
+      <ScrollFade>
         <section id="kontakt" className="relative overflow-hidden">
           <div className="relative min-h-[50vh]">
             <Image
@@ -98,7 +103,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </ScrollReveal>
+      </ScrollFade>
     </div>
   );
 }
