@@ -32,8 +32,8 @@ export default function Home() {
         </p>
       </PizzaFrameSequence>
 
-      <ScrollFade>
-        <section id="ueber-uns" className="relative flex min-h-[60vh] items-end overflow-hidden">
+      <div className="relative h-[200vh]">
+        <section id="ueber-uns" className="sticky top-0 z-0 flex h-screen items-end overflow-hidden">
           <Image
             src="/images/graffiti-wand-tag.jpg"
             alt="Graffiti-Wand im Innenraum von Casa Ribelle mit Bud-Spencer-Portrait und Schriftzug AMORE"
@@ -43,26 +43,15 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
 
           <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
-            <h2 className="font-sans text-4xl leading-[0.95] font-black tracking-tight uppercase sm:text-6xl md:text-7xl">
-              <span className="block -rotate-2 text-white [text-shadow:3px_3px_0_rgba(0,0,0,0.6)]">
-                Mach dir
-              </span>
-              <span className="mt-1 block rotate-1 text-ribelle-gold [text-shadow:3px_3px_0_rgba(0,0,0,0.6)] sm:mt-2">
-                keine Sorgen,
-              </span>
-              <span className="mt-1 block -rotate-1 text-white [text-shadow:3px_3px_0_rgba(0,0,0,0.6)] sm:mt-2">
-                iss erst mal
-              </span>
-              <span className="mt-1 block rotate-2 text-ribelle-red [text-shadow:3px_3px_0_rgba(0,0,0,0.6)] sm:mt-2">
-                eine Pizza!
-              </span>
+            <h2 className="font-display text-3xl font-semibold sm:text-4xl">
+              „Mach dir keine Sorgen, iss erst mal eine Pizza!”
             </h2>
           </div>
         </section>
-      </ScrollFade>
+      </div>
 
-      <ScrollFade>
-        <section className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 py-20 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
+      <section className="relative z-10 w-full bg-background">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 py-20 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
           <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
             <h2 className="font-display text-3xl font-semibold">Speisekarte</h2>
             <p className="max-w-md text-muted-foreground">
@@ -75,8 +64,8 @@ export default function Home() {
           </div>
 
           <MenuTeaserCard />
-        </section>
-      </ScrollFade>
+        </div>
+      </section>
 
       <ScrollFade>
         <GallerySection />
