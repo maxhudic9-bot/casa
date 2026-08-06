@@ -32,14 +32,8 @@ export default function Home() {
         </p>
       </PizzaFrameSequence>
 
-      <div className="relative h-[200vh]">
-        <section id="ueber-uns" className="sticky top-0 z-0 flex h-screen items-end overflow-hidden">
-          <Image
-            src="/images/graffiti-wand-tag.jpg"
-            alt="Graffiti-Wand im Innenraum von Casa Ribelle mit Bud-Spencer-Portrait und Schriftzug AMORE"
-            fill
-            className="object-cover"
-          />
+      <section id="ueber-uns" className="relative h-[200vh]">
+        <div className="sticky top-0 z-0 flex h-screen items-end overflow-hidden bg-[url('/images/graffiti-wand-tag.jpg')] bg-cover bg-center bg-no-repeat">
           <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
 
           <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
@@ -47,8 +41,8 @@ export default function Home() {
               „Mach dir keine Sorgen, iss erst mal eine Pizza!”
             </h2>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <section className="relative z-10 w-full bg-background">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 py-20 sm:flex-row sm:items-center sm:justify-between sm:gap-10">

@@ -71,7 +71,7 @@ function ReviewCard({ review }: { review: CustomerReview }) {
 
 export function GoogleReviews() {
   return (
-    <section className="border-y border-border bg-muted/30">
+    <section className="border-y border-border bg-muted">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 px-4 pt-10 pb-14 text-center">
         <StarRow />
         <p className="text-2xl font-semibold">
