@@ -43,7 +43,7 @@ export function SiteFooter() {
           </Link>
         </div>
 
-        <div>
+        <div id="kontakt" className="scroll-mt-20">
           <h3 className="font-display text-sm tracking-[0.2em] text-ribelle-gold uppercase">Kontakt</h3>
           <ul className="mt-4 space-y-2 text-sm text-white/70">
             <li className="flex items-start gap-2">

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Phone } from "lucide-react";
 
 import { PizzaFrameSequence } from "@/components/hero/pizza-frame-sequence";
 import { GallerySection } from "@/components/sections/gallery-section";
@@ -8,6 +7,12 @@ import { GoogleReviews } from "@/components/sections/google-reviews";
 import { MenuTeaserCard } from "@/components/sections/menu-teaser-card";
 import { ScrollFade } from "@/components/scroll-fade";
 import { Button } from "@/components/ui/button";
+
+const REBELLION_FACTS = [
+  { label: "Holzofen", detail: "485°C · 90 Sekunden", accent: "bg-ribelle-green" },
+  { label: "Burrata", detail: "Frisch auf der Pizza", accent: "bg-ribelle-red" },
+  { label: "Vegan", detail: "Auf Nachfrage", accent: "bg-ribelle-gold" },
+] as const;
 
 export default function Home() {
   return (
@@ -26,6 +31,28 @@ export default function Home() {
           ↓ Scroll für mehr
         </p>
       </PizzaFrameSequence>
+
+      <ScrollFade>
+        <section id="ueber-uns" className="relative flex min-h-[60vh] items-end overflow-hidden">
+          <Image
+            src="/images/graffiti-wand-tag.jpg"
+            alt="Graffiti-Wand im Innenraum von Casa Ribelle mit Bud-Spencer-Portrait und Schriftzug AMORE"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
+
+          <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
+            <h2 className="font-display text-3xl font-semibold sm:text-4xl">
+              Mehr als nur Pizza
+            </h2>
+            <p className="mt-3 max-w-xl text-white/80">
+              Handbemalte Graffiti-Kunst, warmes Licht und echter Holzofen-Charme
+              – bei uns triffst du dich, isst gut und bleibst länger als geplant.
+            </p>
+          </div>
+        </section>
+      </ScrollFade>
 
       <ScrollFade>
         <section className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 py-20 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
@@ -53,29 +80,7 @@ export default function Home() {
       </ScrollFade>
 
       <ScrollFade>
-        <section id="ueber-uns" className="relative flex min-h-[60vh] items-end overflow-hidden">
-          <Image
-            src="/images/graffiti-wand-tag.jpg"
-            alt="Graffiti-Wand im Innenraum von Casa Ribelle mit Bud-Spencer-Portrait und Schriftzug AMORE"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
-
-          <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
-            <h2 className="font-display text-3xl font-semibold sm:text-4xl">
-              Mehr als nur Pizza
-            </h2>
-            <p className="mt-3 max-w-xl text-white/80">
-              Handbemalte Graffiti-Kunst, warmes Licht und echter Holzofen-Charme
-              – bei uns triffst du dich, isst gut und bleibst länger als geplant.
-            </p>
-          </div>
-        </section>
-      </ScrollFade>
-
-      <ScrollFade>
-        <section id="kontakt" className="relative overflow-hidden">
+        <section className="relative overflow-hidden">
           <div className="relative min-h-[50vh]">
             <Image
               src="/images/aussenfassade.jpg"
@@ -86,19 +91,30 @@ export default function Home() {
             <div className="absolute inset-0 bg-ribelle-black/75" />
 
             <div className="relative mx-auto flex max-w-5xl flex-col items-start justify-center gap-4 px-4 py-20 text-white">
-              <h2 className="font-display text-3xl font-semibold">Kontakt</h2>
-              <div className="space-y-2 text-white/80">
-                <p className="flex items-center gap-2">
-                  <MapPin className="size-4 shrink-0 text-ribelle-gold" />
-                  Rotteckring 2, 79098 Freiburg im Breisgau
-                </p>
-                <p className="flex items-center gap-2">
-                  <Phone className="size-4 shrink-0 text-ribelle-gold" />
-                  0761 21495620
-                </p>
-              </div>
-              <div className="text-sm text-white/60">
-                <p>Mo–Do 11–23 Uhr · Fr–Sa 11–24 Uhr · So 11–22 Uhr</p>
+              <h2 className="font-display text-3xl font-semibold sm:text-4xl">
+                Die Rebellion
+              </h2>
+              <p className="text-lg text-ribelle-gold">
+                Straßenkultur trifft neapolitanische Handwerkskunst.
+              </p>
+              <p className="max-w-xl text-white/80">
+                Hinter der Graffiti-Wand am Rotteckring brennt der Holzofen. Wir
+                backen neapolitanische Pizza nach alter Tradition – weich,
+                hochgegangen, mit leopardiertem Rand. Darauf: San Marzano, Fior
+                di Latte und die Königin selbst – die Burrata.
+              </p>
+
+              <div className="mt-2 flex flex-wrap gap-3">
+                {REBELLION_FACTS.map((fact) => (
+                  <div
+                    key={fact.label}
+                    className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm backdrop-blur-sm"
+                  >
+                    <span className={`size-2 shrink-0 rounded-full ${fact.accent}`} />
+                    <span className="font-medium">{fact.label}</span>
+                    <span className="text-white/60">— {fact.detail}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
