@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { PizzaFrameSequence } from "@/components/hero/pizza-frame-sequence";
+import { PinnedReveal } from "@/components/pinned-reveal";
 import { GallerySection } from "@/components/sections/gallery-section";
 import { GoogleReviews } from "@/components/sections/google-reviews";
 import { MenuTeaserCard } from "@/components/sections/menu-teaser-card";
@@ -32,19 +33,20 @@ export default function Home() {
         </p>
       </PizzaFrameSequence>
 
-      <section id="ueber-uns" className="relative h-[300vh]">
-        <div className="sticky top-0 z-0 flex h-screen items-end overflow-hidden bg-[url('/images/graffiti-wand-tag.jpg')] bg-cover bg-center bg-no-repeat">
-          <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
+      <PinnedReveal
+        id="ueber-uns"
+        className="relative z-0 flex h-screen items-end overflow-hidden bg-[url('/images/graffiti-wand-tag.jpg')] bg-cover bg-center bg-no-repeat"
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-ribelle-black via-ribelle-black/40 to-transparent" />
 
-          <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
-            <h2 className="font-display text-3xl font-semibold sm:text-4xl">
-              „Mach dir keine Sorgen, iss erst mal eine Pizza!”
-            </h2>
-          </div>
+        <div className="relative mx-auto max-w-3xl px-4 pb-14 text-white">
+          <h2 className="font-display text-3xl font-semibold sm:text-4xl">
+            „Mach dir keine Sorgen, iss erst mal eine Pizza!”
+          </h2>
         </div>
-      </section>
+      </PinnedReveal>
 
-      <section className="relative z-10 w-full bg-background">
+      <section className="relative z-10 flex min-h-screen w-full items-center bg-background">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 py-20 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
           <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
             <h2 className="font-display text-3xl font-semibold">Speisekarte</h2>
